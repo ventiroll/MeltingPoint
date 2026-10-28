@@ -13,20 +13,25 @@ public class GameManager : MonoBehaviour
     [SerializeField] float speedIncreasePerSecond = 0.1f;
     [SerializeField] float maxSpeed = 20f;
 
+    [Header("Score")]
+    [SerializeField] int startingScore = 100;   // raise this to give the player a buffer
+    [SerializeField] float resetDelay = 1f;   // seconds before the scene resets (0 = instant)
+
     [Header("UI (optional)")]
     [SerializeField] TMP_Text scoreText;
     [SerializeField] GameObject gameOverPanel;
 
     public float Speed { get; private set; }
     public bool IsGameOver { get; private set; }
-
-    float score;
+    public int Score { get; private set; }
 
     void Awake()
     {
         Instance = this;
         Speed = startSpeed;
+        Score = startingScore;
         if (gameOverPanel != null) gameOverPanel.SetActive(false);
+        UpdateScoreText();
     }
 
     void Update()
@@ -45,10 +50,26 @@ public class GameManager : MonoBehaviour
 
         // Gradually speed up, like the dino game
         Speed = Mathf.Min(Speed + speedIncreasePerSecond * Time.deltaTime, maxSpeed);
+    }
 
-        // Score = distance travelled
-        score += Speed * Time.deltaTime;
-        if (scoreText != null) scoreText.text = Mathf.FloorToInt(score).ToString("D5");
+    // Positive amount = points gained, negative = penalty
+    public void AddScore(int amount)
+    {
+        if (IsGameOver) return;
+
+        Score += amount;
+        UpdateScoreText();
+
+        // Reset when a penalty drops the score to 0 or below
+        if (amount < 0 && Score <= 0)
+        {
+            GameOver();
+        }
+    }
+
+    void UpdateScoreText()
+    {
+        if (scoreText != null) scoreText.text = "Score: " + Mathf.Max(Score, 0).ToString("D5");
     }
 
     public void GameOver()
@@ -56,6 +77,7 @@ public class GameManager : MonoBehaviour
         if (IsGameOver) return;
         IsGameOver = true;
         if (gameOverPanel != null) gameOverPanel.SetActive(true);
+        Invoke(nameof(Restart), resetDelay);
     }
 
     public void Restart()
