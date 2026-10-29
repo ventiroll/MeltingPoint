@@ -170,4 +170,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a7e72030771544f89cf83977cdfa880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  element: 0
+  hitsToKill: 1
+  pointsOnKill: 25
+  touchPenalty: 25
+  hitFlashColor: {r: 1, g: 0, b: 0, a: 1}
+  flashTime: 0.1
   destroyX: -15

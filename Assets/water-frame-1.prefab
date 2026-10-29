@@ -125,8 +125,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   element: 1
-  hitsToKill: 4
-  pointsPerHit: 25
+  hitsToKill: 1
+  pointsOnKill: 25
   touchPenalty: 25
   hitFlashColor: {r: 1, g: 0, b: 0, a: 1}
   flashTime: 0.1
