@@ -12,9 +12,12 @@ public class Obstacle : MonoBehaviour
     [SerializeField] Element element = Element.Fire; // set this on each prefab
 
     [Header("Combat")]
-    [SerializeField] int hitsToKill = 4;     // hits needed to defeat this obstacle
+    [SerializeField] int hitsToKill = 1;     // hits needed to defeat this obstacle
     [SerializeField] int pointsOnKill = 25;  // awarded once, when the obstacle is defeated
     [SerializeField] int touchPenalty = 25;  // lost if the player runs into it before it's killed
+
+    [Header("Sound")]
+    [SerializeField] AudioClip defeatSound;  // plays when this obstacle is removed
 
     [Header("Hit flash")]
     [SerializeField] Color hitFlashColor = Color.red;
@@ -59,6 +62,7 @@ public class Obstacle : MonoBehaviour
         if (IsDead)
         {
             GameManager.Instance.AddScore(pointsOnKill);
+            GameManager.Instance.PlaySound(defeatSound);
             Destroy(gameObject);
             return;
         }

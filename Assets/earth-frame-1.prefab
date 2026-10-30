@@ -173,7 +173,8 @@ MonoBehaviour:
   element: 3
   hitsToKill: 1
   pointsOnKill: 25
-  touchPenalty: 25
+  touchPenalty: 50
+  defeatSound: {fileID: 8300000, guid: d35c2ac0accd24ad19add8625f7c523a, type: 3}
   hitFlashColor: {r: 1, g: 0, b: 0, a: 1}
   flashTime: 0.1
   destroyX: -15
